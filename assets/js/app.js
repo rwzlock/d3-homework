@@ -50,8 +50,19 @@ d3.csv("../../Data/cleaneddata.csv", function(error, data) {
     .enter().append("circle")
       .attr("r", 10)
       .attr("cx", function(d) { return x(d.smokes); })
-      .attr("cy", function(d) { return y(d.obesity); })
-      .append("text").text(function(d){ return d.abbr; });
+      .attr("cy", function(d) { return y(d.obesity); });
+      //.append("text").text(function(d){ return d.abbr; });
+
+  // Add Text Labels
+  svg.selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .text(function(d){ return d.abbr; })
+      .attr("x", function(d) { return x(d.smokes)-9; }) 
+      .attr("y", function(d) { return y(d.obesity)+6; })
+      .attr("font-size", "14px")  // Font size
+      .attr("fill", "black");   // Font color
 
   // Add the X Axis
   svg.append("g")
@@ -63,7 +74,8 @@ d3.csv("../../Data/cleaneddata.csv", function(error, data) {
           "translate(" + (width/2) + " ," + 
                          (height + margin.top +20) + ")")
       .style("text-anchor", "middle")
-      .text("% who smoke");
+      .text("% who smoke")
+      .attr("font-size", "18px");
 
   // Add the Y Axis
   svg.append("g")
@@ -75,7 +87,8 @@ d3.csv("../../Data/cleaneddata.csv", function(error, data) {
       .attr("x",0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("% who are obese"); 
+      .text("% who are obese")
+      .attr("font-size", "18px"); 
 
 });
 
